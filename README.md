@@ -6,9 +6,9 @@
     Generate a concise and brief summary of all concrete test result PDFs, to aid in fast and efficient review
   </p>
 <h4>
-    <a href="https://github.com/rpakishore/Concrete_Test_Results/">View Demo</a>
+    <a href="https://github.com/rpakishore/Concrete_Test_Results#11-screenshots">View Demo</a>
   <span> · </span>
-    <a href="https://github.com/rpakishore/Concrete_Test_Results">Documentation</a>
+    <a href="https://github.com/rpakishore/Concrete_Test_Results#2-getting-started">Documentation</a>
   <span> · </span>
     <a href="https://github.com/rpakishore/Concrete_Test_Results/issues/">Report Bug</a>
   <span> · </span>
