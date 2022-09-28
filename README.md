@@ -1,31 +1,93 @@
-- [1. Concrete Test Results](#1-concrete-test-results)
+<!--- Heading --->
+<div align="center">
+  <img src="scr/report.png" alt="logo" width="100" height="auto" />
+  <h1>Concrete Test Results Summary</h1>
+  <p>
+    Generate a concise and brief summary of all concrete test result PDFs, to aid in fast and efficient review
+  </p>
+<h4>
+    <a href="https://github.com/rpakishore/Concrete_Test_Results/">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/rpakishore/Concrete_Test_Results">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/rpakishore/Concrete_Test_Results/issues/">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/rpakishore/Concrete_Test_Results/issues/">Request Feature</a>
+  </h4>
+</div>
+<br />
+
+<!-- Table of Contents -->
+<h2>Table of Contents</h2>  
+
+- [1. About the Project](#1-about-the-project)
   - [1.1. Screenshots](#11-screenshots)
-    - [1.1.1. PDF Report](#111-pdf-report)
-    - [1.1.2. Excel Compilation](#112-excel-compilation)
-    - [1.1.3. How to use](#113-how-to-use)
+  - [1.2. Features](#12-features)
+- [2. Getting Started](#2-getting-started)
+  - [2.1. Prerequisites](#21-prerequisites)
+  - [2.2. Dependencies](#22-dependencies)
+- [3. Supported Material Testing Framework](#3-supported-material-testing-framework)
+- [4. License](#4-license)
+- [5. Contact](#5-contact)
+- [6. Acknowledgements](#6-acknowledgements)
 
+<!-- About the Project -->
+## 1. About the Project
+This is a Jupyter notebook script that programmically reads and extracts data out of concrete test reports into a summarized excel file and PDF summary report
+<!-- Screenshots -->
+### 1.1. Screenshots
+<div align="center"> 
+  <img src="scr/PDFXEdit_TOuqdTL0CR.png" alt="Summary" />
+  <img src="scr/PDFXEdit_4Xm5KQLlBj.png" alt="Sample Graph" />
+  <img src="scr/EXCEL_dZOZkBohTr.png" alt="Excel" />
+</div>
 
-# 1. Concrete Test Results
-This is a Jupyter notebook script that programmically reads and extracts data out of concrete test reports and generates the following:
-1. Excel sheet with the compiled data grouped by mix-type
-2. PDF summary of the compiled data with the following additional verifications
-      - Target vs Achived strength graph to quickly check if req. strength is achieved
-      - Checks for Air content % to meet specified range
-      - Checks for slump to meet specified range
+<!-- Features -->
+### 1.2. Features
+PDF summary of the compiled data with the following additional verifications  
+  - Target vs Achived strength graph to quickly check if req. strength is achieved  
+  - Checks for Air content % to meet specified range
+  - Checks for slump to meet specified range
 
-## 1.1. Screenshots
-### 1.1.1. PDF Report
-![Summary](scr/PDFXEdit_TOuqdTL0CR.png) | ![Sample Graph](scr/PDFXEdit_4Xm5KQLlBj.png)
+## 2. Getting Started
 
-### 1.1.2. Excel Compilation
-![Excel](scr/EXCEL_dZOZkBohTr.png)
+<!-- Prerequisites -->
+### 2.1. Prerequisites
 
-### 1.1.3. How to use
-1. Install required packages using 
-```
+### 2.2. Dependencies
+Create the virutual environment and install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
-2. In the file `Extract_from_PDF.ipynb` update the `folder` to point to the folder with the concrete test reports
-3. Run all cells under `Imports`, `Classes`, `Process PDF Files`
-4. Review the code under `User Input Needed` sections to ensure it matches the desired output.
-5. Run all the rest of the sections.
+
+<!-- Roadmap -->
+## 3. Supported Material Testing Framework
+
+This project will always remain a work in progress. A list of supported material testing report formats are shown below. More will be added in the future. 
+
+If you would like to see a particular company, please open up a [new issue](https://github.com/rpakishore/Concrete_Test_Results/issues/)
+
+| Company | Status |
+|---------|--------|
+| McElhanney | ✔️ |
+| Kontur Geotechnical Consultants | ✔️ |
+
+<!-- License -->
+## 4. License
+Distributed under the no License. See LICENSE.txt for more information.
+
+<!-- Contact -->
+## 5. Contact
+
+Arun Kishore - [@rpakishore](mailto:rpakishore@gmail.com)
+
+Project Link: [https://github.com/rpakishore/](https://github.com/rpakishore/Concrete_Test_Results/)
+
+<!-- Acknowledgments -->
+## 6. Acknowledgements
+
+Use this section to mention useful resources and libraries that you have used in your projects.
+
+ - [Awesome README Template](https://github.com/Louis3797/awesome-readme-template/blob/main/README-WITHOUT-EMOJI.md)
+ - <a href="https://www.flaticon.com/free-icons/report" title="report icons">Report icons created by Freepik - Flaticon</a>
