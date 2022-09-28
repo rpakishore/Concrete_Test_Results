@@ -80,7 +80,7 @@ Distributed under the no License. See LICENSE.txt for more information.
 <!-- Contact -->
 ## 5. Contact
 
-Arun Kishore - [@rpakishore](mailto:rpakishore@gmail.com)
+Arun Kishore - <a href="mailto:rpakishore@gmail.com?subject=[Concrete Test Results Summary]">@rpakishore</a>
 
 Project Link: [https://github.com/rpakishore/](https://github.com/rpakishore/Concrete_Test_Results/)
 
