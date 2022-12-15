@@ -16,7 +16,8 @@
   </h4>
 </div>
 <br />
-
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/Concrete_Test_Results)
+![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/Concrete_Test_Results)
 <!-- Table of Contents -->
 <h2>Table of Contents</h2>  
 
