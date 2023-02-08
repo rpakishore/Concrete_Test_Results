@@ -6,11 +6,11 @@ from conc_test_report.definitions import ReportData
 import pandas as pd
 
 class Company:
-    def __init__(self, textblob: str, filepath: str):
+    def __init__(self, textblob: str, filepath: str, company: str):
         self.textblob = textblob
         self.filepath = Path(str(filepath))
         self.filename = self.filepath.name
-        self.data = ReportData(filepath=self.filepath)
+        self.data = ReportData(filepath=self.filepath, company=company)
     
     def __repr__(self) -> str:
         textblob = self.textblob
