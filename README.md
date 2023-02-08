@@ -1,6 +1,6 @@
 <!--- Heading --->
 <div align="center">
-  <img src="scr/report.png" alt="logo" width="100" height="auto" />
+  <img src="assets/report.png" alt="logo" width="100" height="auto" />
   <h1>Concrete Test Results Summary</h1>
   <p>
     Generate a concise and brief summary of all concrete test result PDFs, to aid in fast and efficient review
@@ -16,6 +16,9 @@
   </h4>
 </div>
 <br />
+
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/Concrete_Test_Results)
+![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/Concrete_Test_Results)
 
 <!-- Table of Contents -->
 <h2>Table of Contents</h2>  
@@ -37,9 +40,9 @@ This is a Jupyter notebook script that programmically reads and extracts data ou
 <!-- Screenshots -->
 ### 1.1. Screenshots
 <div align="center"> 
-  <img src="scr/PDFXEdit_TOuqdTL0CR.png" alt="Summary" />
-  <img src="scr/PDFXEdit_4Xm5KQLlBj.png" alt="Sample Graph" />
-  <img src="scr/EXCEL_dZOZkBohTr.png" alt="Excel" />
+  <img src="assets/PDFXEdit_TOuqdTL0CR.png" alt="Summary" />
+  <img src="assets/PDFXEdit_4Xm5KQLlBj.png" alt="Sample Graph" />
+  <img src="assets/EXCEL_dZOZkBohTr.png" alt="Excel" />
 </div>
 
 <!-- Features -->
@@ -80,9 +83,9 @@ Distributed under the no License. See LICENSE.txt for more information.
 <!-- Contact -->
 ## 5. Contact
 
-Arun Kishore - <a href="mailto:rpakishore@gmail.com?subject=[Concrete Test Results Summary]">@rpakishore</a>
+Arun Kishore - <a href="mailto:pypi@rpakishore.co.in?subject=[Concrete Test Results Summary]">@rpakishore</a>
 
-Project Link: [https://github.com/rpakishore/](https://github.com/rpakishore/Concrete_Test_Results/)
+Project Link: [https://github.com/rpakishore/Concrete_Test_Results](https://github.com/rpakishore/Concrete_Test_Results/)
 
 <!-- Acknowledgments -->
 ## 6. Acknowledgements

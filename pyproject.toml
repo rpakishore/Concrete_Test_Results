@@ -1,0 +1,20 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "conc_test_report"
+authors = [{name = "Arun Kishore", email = "pypi@rpakishore.co.in"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+
+dependencies = [
+    "pytest>=7.2.1",
+    "pandas>=1.5.3",
+    "pdfplumber==0.7.6"
+]
+
+[project.urls]
+Home = "https://github.com/rpakishore/Concrete_Test_Results"
