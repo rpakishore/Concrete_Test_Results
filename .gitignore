@@ -113,3 +113,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 nosync_Summary_Generator.ipynb
+nosync.ipynb
