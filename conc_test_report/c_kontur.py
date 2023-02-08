@@ -16,24 +16,13 @@ class Kontur(Company):
         load_vol = r"^LOAD *VOL.: *(\d*) m3" )
 
     def __init__(self, textblob: str, filepath: str):
-        Company.__init__(self, textblob, filepath)
-        self.name = "Kontur Geotechnical Consultants"
+        Company.__init__(self, textblob, filepath, company="Kontur Geotechnical Consultants")
         
     def __str__(self) -> str:
-        return f"Company parser for Kontur"
+        return f"Company parser for Kontur ({self.filename})"
 
     def extract_data(self) -> ReportData:
         try:
-            # pattern = {
-            #     "Test Data": r"([A-Z]) *Cylinder *(\d*) *(Lab|Field) *((\d{2}-\w{3})|(\w{3}.\d{2})-? *(\d*) *[A-Za-z ]*)?\d{3}.\d *\d{3}.\d( *\d* *(\d*.\d))?",
-            #     "Specified Strength": r"SPECIFIED *STRENGTH: *(\d*) *MPa *@ *(\d*) * DAYS",
-            #     "Set Data": r"SET *NO.:(\d*) *SPECIMENS: *(\d*) *CAST: *(\d{4}.\w{3}.\d{2}) *TRANSPORTED: *(\d{4}.\w{3}.\d{2})",
-            #     "Report Date": r".*Page *1 *of *\d* *(\d*.\w{3}.\d*)|(\d*-\w{3}-\d{4})",
-            #     "Air": r".*AIR: *(\d{1,2}.?\d?) *% *SPEC.: *(\d{1,2}.?\d?) *± *(\d{1,2}.?\d?)",
-            #     "Slump": r".*SLUMP: *(\d*) *mm *SPEC.: *(\d*) *± *(\d*)",
-            #     "Mix": r".*MIX *NO.:? *(.*)$",
-            #     "Load Volume": r"^LOAD *VOL.: *(\d*) m3"
-            # }
             pattern = self.PATTERN
             for i, line in enumerate(self.data.split('\n')):
                 specified_strength = re.match(pattern.specified_str, line.strip())
@@ -119,3 +108,5 @@ class Kontur(Company):
 
         except Exception as e:
             self.log_error('z',str(e))
+
+        return self.data
