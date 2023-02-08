@@ -11,11 +11,15 @@ class Company:
         self.filepath = Path(str(filepath))
         self.filename = self.filepath.name
         self.data = ReportData(filepath=self.filepath, company=company)
+        self.company = company
     
     def __repr__(self) -> str:
         textblob = self.textblob
         filepath = self.filepath
         return f"Company({filepath=},{textblob=})"
+
+    def __str__(self) -> str:
+        return f"Company parser for {self.company} ({self.filename})"
 
     def _log_error(self, code, desc) -> None:
         """Collects the specified errorcode and description into the `errors` attribute

@@ -18,10 +18,10 @@ class McElhanney(Company):
     def __init__(self, textblob: str, filepath: str):
         Company.__init__(self, textblob, filepath, company="McElhanney")
 
-    def __str__(self) -> str:
-        return f"Company parser for McElhanney ({self.filename})"
-
     def extract_data(self) -> ReportData:
+        ### NEXTSTEPS
+        ### SPLIT THIS INTO SMALLER HELPER FUNCTIONS
+
         try:
             pattern = self.PATTERN
             for i, line in enumerate(self.data.split('\n')):

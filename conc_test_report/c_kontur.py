@@ -17,11 +17,11 @@ class Kontur(Company):
 
     def __init__(self, textblob: str, filepath: str):
         Company.__init__(self, textblob, filepath, company="Kontur Geotechnical Consultants")
-        
-    def __str__(self) -> str:
-        return f"Company parser for Kontur ({self.filename})"
 
     def extract_data(self) -> ReportData:
+        ### NEXTSTEPS
+        ### SPLIT THIS INTO SMALLER HELPER FUNCTIONS
+
         try:
             pattern = self.PATTERN
             for i, line in enumerate(self.data.split('\n')):
