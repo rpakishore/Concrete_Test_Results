@@ -23,25 +23,25 @@ class ReportPattern:
 class ReportData:
     filepath: Path
     company: str
-    report_date: date
-    set_num: str
-    specimens: int
-    cast_date: date
-    transport_date: date
-    specified_str: float
-    specified_str_days: int
-    mix_num: int
-    load_vol: float
-    slump: float
-    specified_slump: float
-    air: float
-    specified_air: float
-    admixtures: list = field(default=[])
-    location_comments: list = field(default=[])
-    other_comments: list = field(default=[])
+    report_date: date = field(default=date)
+    set_num: str = field(default_factory=str)
+    specimens: int = field(default_factory=int)
+    cast_date: date = field(default=date)
+    transport_date: date = field(default=date)
+    specified_str: float = field(default_factory=float)
+    specified_str_days: int = field(default_factory=int)
+    mix_num: int = field(default_factory=int)
+    load_vol: float = field(default_factory=float)
+    slump: float = field(default_factory=float)
+    specified_slump: float = field(default_factory=float)
+    air: float = field(default_factory=float)
+    specified_air: float = field(default_factory=float)
+    admixtures: list = field(default_factory=list)
+    location_comments: list = field(default_factory=list)
+    other_comments: list = field(default_factory=list)
     errors: pd.DataFrame = field(default=pd.DataFrame(columns=['Error Code', 'Description']))
     test_data: pd.DataFrame = field(default=pd.DataFrame(columns=['Specimen','Cure','Test_Date', 'Age', 'Compressive_Str']))
-    filename: str = field(default=None)
+    filename: str = field(default_factory=str)
 
     def __post_init__(self):
         self.filename = self.filepath.name
