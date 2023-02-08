@@ -1,48 +1,12 @@
 import re, pdfplumber, os
 import pandas as pd
-from datetime import datetime, date
-from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 from typing import Union
-from conc_test_report.company import COMPANY_PATTERNS, ReportPattern
+from conc_test_report.company import identify_company_from_text
+from conc_test_report import stru_checks
+from conc_test_report.definitions import ReportData
 
-@dataclass
-class ReportData:
-    filepath: Path
-    company: str
-    report_date: date
-    set_num: str
-    specimens: int
-    cast_date: date
-    transport_date: date
-    specified_str: float
-    specified_str_days: int
-    mix_num: int
-    load_vol: float
-    slump: float
-    specified_slump: float
-    air: float
-    specified_air: float
-    admixtures: list = field(default=[])
-    location_comments: list = field(default=[])
-    other_comments: list = field(default=[])
-    errors: pd.DataFrame = field(default=pd.DataFrame(columns=['Error Code', 'Description']))
-    test_data: pd.DataFrame = field(default=pd.DataFrame(columns=['Specimen','Cure','Test_Date', 'Age', 'Compressive_Str']))
-    filename: str = field(default=None)
-
-    def __post_init__(self):
-        self.filename = self.filepath.name
-
-def _identify_company_from_text(pdf_text: str) -> str:
-    """ Checks to see which of the defined company specific identifiers match
-        to identify the company
-    """
-    if 'mcelhanney' in pdf_text.split('\n')[0].lower():
-        return "McElhanney"
-    elif 'kontur' in pdf_text.split('\n')[0].lower():
-        return "Kontur Geotechnical Consultants"
-    
-    return None
 def extract_text_from_pdf(filepath: Path) -> str:
     """Extracts the contents of a pdf documentand returns the text
     """
@@ -50,21 +14,23 @@ def extract_text_from_pdf(filepath: Path) -> str:
         data = [page.extract_text() for page in pdf.pages]
         return "\n".join(data)
 
-def _extract_report_fields_from_txt(pdftext: str, patterns: ReportPattern) -> ReportData:
-    pass
+
+def check_regex(line:str, pattern:str) -> Union[str, None]:
+    match = re.match(pattern, line.strip())
+    if match:
+        return match.group(1)
+    return None
 
 class Report():
-
-
     def __init__(self, file: Union[str, Path]):
         self.file = Path(str(file))
         self.errors = pd.DataFrame(columns=['Error Code', 'Description'])
 
         self.pdf_text = extract_text_from_pdf(file)
-        company_name = _identify_company_from_text(self.pdf_text)
-        company_patterns = COMPANY_PATTERNS.get(company_name)
-        if company_patterns:
-            report = _extract_report_fields_from_txt(self.pdf_text, company_patterns)
+
+        self.company = identify_company_from_text(self.pdf_text)
+        if self.company:
+            report = self.company.extract_data()
             self.report = self.check_errors(report)
         else:
             self._log_error('a',self.pdf_text.split('\n')[0].strip())
@@ -83,7 +49,7 @@ class Report():
         self.errors = pd.concat([self.errors, df], ignore_index=True)
 
 
-    def check_errors(self, report_data: ReportData) -> ReportData:
+    def check_errors(self, x: ReportData) -> ReportData:
         """ Performs custom defined checks on the sample data to confirm if 
             item values are in expected ranges
         """
@@ -96,36 +62,28 @@ class Report():
         # 'z': 'Some other error'
 
         # <!------- Check number of specimens ------->
-        if len(report_data.test_data) != report_data.specimens:
-            self._log_error('b', f"Specimens: {report_data.specimens}, Avail. Data: {len(report_data.test_data)}")
+        if len(x.test_data) != x.specimens:
+            self._log_error('b', f"Specimens: {x.specimens}, Avail. Data: {len(x.test_data)}")
 
         # <!------- Check Air content ------->
-        if report_data.air and report_data.specified_air != []:
-            if report_data.air > report_data.specified_air[1]:
-                self._log_error(
-                    'd', f"Air: {report_data.air}% > Allow. max:{report_data.specified_air[1]}%"
-                    )
-            elif report_data.air < report_data.specified_air[0]:
-                self._log_error(
-                    'd', f"Air: {report_data.air}% < Allow. min:{report_data.specified_air[0]}%"
-                    )
+        if x.air and x.specified_air:
+            options = ["", self.log_error('d', f"Air: {x.air}% > Allow. max:{x.specified_air[1]}%"),
+                self.log_error('d', f"Air: {x.air}% < Allow. min:{x.specified_air[0]}%")]
+            options[stru_checks.air(x.air, x.specified_air[0], x.specified_air[1])]
         else:
-            self._log_error('e', 'No Air content data found.')
+            self._log_error('e', 'Air content data missing.')
 
         # <!------- Check Slump ------->
-        if report_data.slump and report_data.specified_slump != []:
-            if report_data.slump > report_data.specified_slump[1]:
-                self._log_error(
-                    'c', f"Slump: {report_data.slump}mm > Allow. max:{report_data.specified_slump[1]}mm"
-                    )
-            elif report_data.slump < report_data.specified_slump[0]:
-                self._log_error(
-                    'c', f"Slump: {report_data.slump}mm <  Allow. min:{report_data.specified_slump[0]}mm"
-                    )
+        if x.slump and x.specified_slump:
+            options = ["", self.log_error('c', f"Slump: {x.slump}mm > Allow. max:{x.specified_slump[1]}mm"),
+                self.log_error('c', f"Slump: {x.slump}mm <  Allow. min:{x.specified_slump[0]}mm")]
+            options[stru_checks.slump(x.slump, x.specified_slump[0], x.specified_slump[1])]
         else:
-            self._log_error('e', 'Slump info not found.')
-        report_data.errors = self.errors
-        return report_data
+            self._log_error('e', 'Slump info missing.')
+
+
+        x.errors = self.errors
+        return x
 
 class concrete_test():
     def __init__(self, file):
@@ -179,19 +137,7 @@ class concrete_test():
         for key in combine.keys():
             if self.extracted_data['Mix Number'] in combine[key]:
                 self.extracted_data['Mix Number'] = key
-
-    def find_company(self):
-        company = None
-        if 'mcelhanney' in self.data.split('\n')[0].lower():
-            company = "McElhanney"
-        if 'kontur' in self.data.split('\n')[0].lower():
-            company = "Kontur Geotechnical Consultants"
-        self.company = company
     
-    def log_error(self, code, desc):
-        df = pd.DataFrame([[code, desc]],columns = ['Error Code', 'Description'])
-        self.extracted_data['Errors'] = pd.concat([self.extracted_data['Errors'], df], ignore_index=True)
-
     def McElhanney(self):
         try:
             pattern = {
@@ -379,33 +325,3 @@ class concrete_test():
 
         except Exception as e:
             self.log_error('z',str(e))
-
-    def check_errors(self):
-        self.err = {
-            'a':'Template for this company is not defined',
-            'b': 'Specimen # in extracted PDF does not match scrapped test data from PDF',
-            'c': 'Slump issue',
-            'd': 'Air % Issue',
-            'e': 'Missing Information',
-            'z': 'Some other error'
-        }
-        data = self.extracted_data
-        if len(data['Test Data']) != data['Specimens']:
-            self.log_error('b', f"Specimens: {data['Specimens']}, Avail. Data: {len(data['Test Data'])}")
-
-        if data['Air'] and data['Specified Air'] != []:
-            if data['Air'] > data['Specified Air'][1]:
-                self.log_error('d', f"Air: {data['Air']}% > Allow. max:{data['Specified Air'][1]}%")
-            elif data['Air'] < data['Specified Air'][0]:
-                self.log_error('d', f"Air: {data['Air']}% < Allow. min:{data['Specified Air'][0]}%")
-        else:
-            self.log_error('e', 'No Air content data found.')
-
-        if data['Slump'] and data['Specified Slump'] != []:
-            if data['Slump'] > data['Specified Slump'][1]:
-                self.log_error('c', f"Slump: {data['Slump']}mm > Allow. max:{data['Specified Slump'][1]}mm")
-            elif data['Slump'] < data['Specified Slump'][0]:
-                self.log_error('c', f"Slump: {data['Slump']}mm <  Allow. min:{data['Specified Slump'][0]}mm")
-        else:
-            self.log_error('e', 'Slump info not found.')
-        self.extracted_data = data
