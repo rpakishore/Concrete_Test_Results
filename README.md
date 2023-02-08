@@ -17,6 +17,7 @@
 </div>
 <br />
 
+[![tests](https://github.com/rpakishore/Concrete_Test_Results/actions/workflows/test.yml/badge.svg)](https://github.com/rpakishore/Concrete_Test_Results/actions/workflows/test.yml)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/Concrete_Test_Results)
 ![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/Concrete_Test_Results)
 
