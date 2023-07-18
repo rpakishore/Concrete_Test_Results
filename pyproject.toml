@@ -11,9 +11,17 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 
 dependencies = [
-    "pytest>=7.2.1",
-    "pandas>=1.5.3",
-    "pdfplumber==0.7.6"
+    "pandas",
+    "pdfplumber>=0.7.6",
+    "ipykernel",
+    "tqdm",
+    "openpyxl",
+    "fpdf"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest"
 ]
 
 [project.urls]
